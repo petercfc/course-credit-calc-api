@@ -1,0 +1,34 @@
+type Student {
+  id: ID! @unique
+  name: String
+  coursesPassed: [Course]
+  enrolledDegree:Degree
+}
+
+type Subject {
+  id: ID! @unique
+  name: String!
+}
+
+type Degree {
+  id: ID! @unique
+  name: String!
+  requiredCredits: Int!
+}
+
+type Department {
+  id: ID! @unique
+  name: String!
+}
+
+type Course {
+  id: ID! @unique
+  name: String!
+  number:String!
+  level: Int!
+  credits: Int!
+  subject: Subject
+  degree: Degree
+  department: Department
+  prerequisite:Course
+}
