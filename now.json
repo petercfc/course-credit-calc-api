@@ -1,5 +1,10 @@
 {
   "version": 2,
   "name": "course-credit-calc-api",
-  "builds": [{ "src": "*.js", "use": "@now/node" }]
+  "builds": [
+    {
+      "src": "./src/**/*.ts",
+      "use": "@now/node"
+    }
+  ]
 }
