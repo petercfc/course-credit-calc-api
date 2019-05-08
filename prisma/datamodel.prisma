@@ -8,22 +8,28 @@ type Student {
 type Subject {
   id: ID! @unique
   name: String!
+  description: String!
 }
 
 type Degree {
   id: ID! @unique
   name: String!
+  description: String!
   requiredCredits: Int!
+  requiredCourses: [Course]
+  department: Department
 }
 
 type Department {
   id: ID! @unique
   name: String!
+  description: String!
 }
 
 type Course {
   id: ID! @unique
   name: String!
+  description: String!
   number:String!
   level: Int!
   credits: Int!
