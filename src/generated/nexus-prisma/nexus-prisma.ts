@@ -102,11 +102,15 @@ export interface NexusPrismaTypes {
       CourseCreateInput: CourseCreateInputInputObject
       SubjectCreateOneInput: SubjectCreateOneInputInputObject
       SubjectCreateInput: SubjectCreateInputInputObject
-      DegreeCreateOneInput: DegreeCreateOneInputInputObject
-      DegreeCreateInput: DegreeCreateInputInputObject
+      DegreeCreateOneWithoutRequiredCoursesInput: DegreeCreateOneWithoutRequiredCoursesInputInputObject
+      DegreeCreateWithoutRequiredCoursesInput: DegreeCreateWithoutRequiredCoursesInputInputObject
       DepartmentCreateOneInput: DepartmentCreateOneInputInputObject
       DepartmentCreateInput: DepartmentCreateInputInputObject
       CourseCreateOneInput: CourseCreateOneInputInputObject
+      DegreeCreateOneInput: DegreeCreateOneInputInputObject
+      DegreeCreateInput: DegreeCreateInputInputObject
+      CourseCreateManyWithoutDegreeInput: CourseCreateManyWithoutDegreeInputInputObject
+      CourseCreateWithoutDegreeInput: CourseCreateWithoutDegreeInputInputObject
       StudentUpdateInput: StudentUpdateInputInputObject
       CourseUpdateManyInput: CourseUpdateManyInputInputObject
       CourseUpdateWithWhereUniqueNestedInput: CourseUpdateWithWhereUniqueNestedInputInputObject
@@ -114,18 +118,25 @@ export interface NexusPrismaTypes {
       SubjectUpdateOneInput: SubjectUpdateOneInputInputObject
       SubjectUpdateDataInput: SubjectUpdateDataInputInputObject
       SubjectUpsertNestedInput: SubjectUpsertNestedInputInputObject
-      DegreeUpdateOneInput: DegreeUpdateOneInputInputObject
-      DegreeUpdateDataInput: DegreeUpdateDataInputInputObject
-      DegreeUpsertNestedInput: DegreeUpsertNestedInputInputObject
+      DegreeUpdateOneWithoutRequiredCoursesInput: DegreeUpdateOneWithoutRequiredCoursesInputInputObject
+      DegreeUpdateWithoutRequiredCoursesDataInput: DegreeUpdateWithoutRequiredCoursesDataInputInputObject
       DepartmentUpdateOneInput: DepartmentUpdateOneInputInputObject
       DepartmentUpdateDataInput: DepartmentUpdateDataInputInputObject
       DepartmentUpsertNestedInput: DepartmentUpsertNestedInputInputObject
+      DegreeUpsertWithoutRequiredCoursesInput: DegreeUpsertWithoutRequiredCoursesInputInputObject
       CourseUpdateOneInput: CourseUpdateOneInputInputObject
       CourseUpsertNestedInput: CourseUpsertNestedInputInputObject
       CourseUpsertWithWhereUniqueNestedInput: CourseUpsertWithWhereUniqueNestedInputInputObject
       CourseScalarWhereInput: CourseScalarWhereInputInputObject
       CourseUpdateManyWithWhereNestedInput: CourseUpdateManyWithWhereNestedInputInputObject
       CourseUpdateManyDataInput: CourseUpdateManyDataInputInputObject
+      DegreeUpdateOneInput: DegreeUpdateOneInputInputObject
+      DegreeUpdateDataInput: DegreeUpdateDataInputInputObject
+      CourseUpdateManyWithoutDegreeInput: CourseUpdateManyWithoutDegreeInputInputObject
+      CourseUpdateWithWhereUniqueWithoutDegreeInput: CourseUpdateWithWhereUniqueWithoutDegreeInputInputObject
+      CourseUpdateWithoutDegreeDataInput: CourseUpdateWithoutDegreeDataInputInputObject
+      CourseUpsertWithWhereUniqueWithoutDegreeInput: CourseUpsertWithWhereUniqueWithoutDegreeInputInputObject
+      DegreeUpsertNestedInput: DegreeUpsertNestedInputInputObject
       StudentUpdateManyMutationInput: StudentUpdateManyMutationInputInputObject
       SubjectUpdateInput: SubjectUpdateInputInputObject
       SubjectUpdateManyMutationInput: SubjectUpdateManyMutationInputInputObject
@@ -503,12 +514,16 @@ export interface QueryFieldDetails {
 type StudentObject =
   | StudentFields
   | { name: 'id', args?: [] | false, alias?: string  } 
+  | { name: 'updatedAt', args?: [] | false, alias?: string  } 
+  | { name: 'createdAt', args?: [] | false, alias?: string  } 
   | { name: 'name', args?: [] | false, alias?: string  } 
   | { name: 'coursesPassed', args?: StudentCoursesPassedArgs[] | false, alias?: string  } 
   | { name: 'enrolledDegree', args?: [] | false, alias?: string  } 
 
 type StudentFields =
   | 'id'
+  | 'updatedAt'
+  | 'createdAt'
   | 'name'
   | 'coursesPassed'
   | 'enrolledDegree'
@@ -527,6 +542,22 @@ type StudentCoursesPassedArgs =
 export interface StudentFieldDetails {
   id: {
     type: 'ID'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  updatedAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  createdAt: {
+    type: 'DateTime'
     args: {}
     description: string
     list: undefined
@@ -575,7 +606,10 @@ export interface StudentFieldDetails {
 type CourseObject =
   | CourseFields
   | { name: 'id', args?: [] | false, alias?: string  } 
+  | { name: 'updatedAt', args?: [] | false, alias?: string  } 
+  | { name: 'createdAt', args?: [] | false, alias?: string  } 
   | { name: 'name', args?: [] | false, alias?: string  } 
+  | { name: 'description', args?: [] | false, alias?: string  } 
   | { name: 'number', args?: [] | false, alias?: string  } 
   | { name: 'level', args?: [] | false, alias?: string  } 
   | { name: 'credits', args?: [] | false, alias?: string  } 
@@ -586,7 +620,10 @@ type CourseObject =
 
 type CourseFields =
   | 'id'
+  | 'updatedAt'
+  | 'createdAt'
   | 'name'
+  | 'description'
   | 'number'
   | 'level'
   | 'credits'
@@ -608,7 +645,31 @@ export interface CourseFieldDetails {
     nullable: false
     resolve: undefined
   }
+  updatedAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  createdAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
   name: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  description: {
     type: 'String'
     args: {}
     description: string
@@ -700,11 +761,17 @@ export interface CourseFieldDetails {
 type SubjectObject =
   | SubjectFields
   | { name: 'id', args?: [] | false, alias?: string  } 
+  | { name: 'updatedAt', args?: [] | false, alias?: string  } 
+  | { name: 'createdAt', args?: [] | false, alias?: string  } 
   | { name: 'name', args?: [] | false, alias?: string  } 
+  | { name: 'description', args?: [] | false, alias?: string  } 
 
 type SubjectFields =
   | 'id'
+  | 'updatedAt'
+  | 'createdAt'
   | 'name'
+  | 'description'
 
 
 
@@ -719,7 +786,31 @@ export interface SubjectFieldDetails {
     nullable: false
     resolve: undefined
   }
+  updatedAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  createdAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
   name: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  description: {
     type: 'String'
     args: {}
     description: string
@@ -735,16 +826,33 @@ export interface SubjectFieldDetails {
 type DegreeObject =
   | DegreeFields
   | { name: 'id', args?: [] | false, alias?: string  } 
+  | { name: 'updatedAt', args?: [] | false, alias?: string  } 
+  | { name: 'createdAt', args?: [] | false, alias?: string  } 
   | { name: 'name', args?: [] | false, alias?: string  } 
+  | { name: 'description', args?: [] | false, alias?: string  } 
   | { name: 'requiredCredits', args?: [] | false, alias?: string  } 
+  | { name: 'requiredCourses', args?: DegreeRequiredCoursesArgs[] | false, alias?: string  } 
+  | { name: 'department', args?: [] | false, alias?: string  } 
 
 type DegreeFields =
   | 'id'
+  | 'updatedAt'
+  | 'createdAt'
   | 'name'
+  | 'description'
   | 'requiredCredits'
+  | 'requiredCourses'
+  | 'department'
 
 
-
+type DegreeRequiredCoursesArgs =
+  | 'where'
+  | 'orderBy'
+  | 'skip'
+  | 'after'
+  | 'before'
+  | 'first'
+  | 'last'
   
 
 export interface DegreeFieldDetails {
@@ -756,7 +864,31 @@ export interface DegreeFieldDetails {
     nullable: false
     resolve: undefined
   }
+  updatedAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  createdAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
   name: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  description: {
     type: 'String'
     args: {}
     description: string
@@ -772,6 +904,32 @@ export interface DegreeFieldDetails {
     nullable: false
     resolve: undefined
   }
+  requiredCourses: {
+    type: 'Course'
+    args: Record<DegreeRequiredCoursesArgs, core.NexusArgDef<string>>
+    description: string
+    list: true
+    nullable: false
+    resolve: (
+      root: core.RootValue<"Degree">,
+      args: { where?: CourseWhereInput | null, orderBy?: prisma.CourseOrderByInput | null, skip?: number | null, after?: string | null, before?: string | null, first?: number | null, last?: number | null }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.Course[]> | prisma.Course[]
+  }
+  department: {
+    type: 'Department'
+    args: {}
+    description: string
+    list: undefined
+    nullable: true
+    resolve: (
+      root: core.RootValue<"Degree">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.Department | null> | prisma.Department | null
+  }
 }
   
 
@@ -780,11 +938,17 @@ export interface DegreeFieldDetails {
 type DepartmentObject =
   | DepartmentFields
   | { name: 'id', args?: [] | false, alias?: string  } 
+  | { name: 'updatedAt', args?: [] | false, alias?: string  } 
+  | { name: 'createdAt', args?: [] | false, alias?: string  } 
   | { name: 'name', args?: [] | false, alias?: string  } 
+  | { name: 'description', args?: [] | false, alias?: string  } 
 
 type DepartmentFields =
   | 'id'
+  | 'updatedAt'
+  | 'createdAt'
   | 'name'
+  | 'description'
 
 
 
@@ -799,7 +963,31 @@ export interface DepartmentFieldDetails {
     nullable: false
     resolve: undefined
   }
+  updatedAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  createdAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
   name: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  description: {
     type: 'String'
     args: {}
     description: string
@@ -2233,10 +2421,14 @@ export interface StudentSubscriptionPayloadFieldDetails {
 type StudentPreviousValuesObject =
   | StudentPreviousValuesFields
   | { name: 'id', args?: [] | false, alias?: string  } 
+  | { name: 'updatedAt', args?: [] | false, alias?: string  } 
+  | { name: 'createdAt', args?: [] | false, alias?: string  } 
   | { name: 'name', args?: [] | false, alias?: string  } 
 
 type StudentPreviousValuesFields =
   | 'id'
+  | 'updatedAt'
+  | 'createdAt'
   | 'name'
 
 
@@ -2246,6 +2438,22 @@ type StudentPreviousValuesFields =
 export interface StudentPreviousValuesFieldDetails {
   id: {
     type: 'ID'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  updatedAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  createdAt: {
+    type: 'DateTime'
     args: {}
     description: string
     list: undefined
@@ -2338,11 +2546,17 @@ export interface SubjectSubscriptionPayloadFieldDetails {
 type SubjectPreviousValuesObject =
   | SubjectPreviousValuesFields
   | { name: 'id', args?: [] | false, alias?: string  } 
+  | { name: 'updatedAt', args?: [] | false, alias?: string  } 
+  | { name: 'createdAt', args?: [] | false, alias?: string  } 
   | { name: 'name', args?: [] | false, alias?: string  } 
+  | { name: 'description', args?: [] | false, alias?: string  } 
 
 type SubjectPreviousValuesFields =
   | 'id'
+  | 'updatedAt'
+  | 'createdAt'
   | 'name'
+  | 'description'
 
 
 
@@ -2357,7 +2571,31 @@ export interface SubjectPreviousValuesFieldDetails {
     nullable: false
     resolve: undefined
   }
+  updatedAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  createdAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
   name: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  description: {
     type: 'String'
     args: {}
     description: string
@@ -2443,12 +2681,18 @@ export interface DegreeSubscriptionPayloadFieldDetails {
 type DegreePreviousValuesObject =
   | DegreePreviousValuesFields
   | { name: 'id', args?: [] | false, alias?: string  } 
+  | { name: 'updatedAt', args?: [] | false, alias?: string  } 
+  | { name: 'createdAt', args?: [] | false, alias?: string  } 
   | { name: 'name', args?: [] | false, alias?: string  } 
+  | { name: 'description', args?: [] | false, alias?: string  } 
   | { name: 'requiredCredits', args?: [] | false, alias?: string  } 
 
 type DegreePreviousValuesFields =
   | 'id'
+  | 'updatedAt'
+  | 'createdAt'
   | 'name'
+  | 'description'
   | 'requiredCredits'
 
 
@@ -2464,7 +2708,31 @@ export interface DegreePreviousValuesFieldDetails {
     nullable: false
     resolve: undefined
   }
+  updatedAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  createdAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
   name: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  description: {
     type: 'String'
     args: {}
     description: string
@@ -2558,11 +2826,17 @@ export interface DepartmentSubscriptionPayloadFieldDetails {
 type DepartmentPreviousValuesObject =
   | DepartmentPreviousValuesFields
   | { name: 'id', args?: [] | false, alias?: string  } 
+  | { name: 'updatedAt', args?: [] | false, alias?: string  } 
+  | { name: 'createdAt', args?: [] | false, alias?: string  } 
   | { name: 'name', args?: [] | false, alias?: string  } 
+  | { name: 'description', args?: [] | false, alias?: string  } 
 
 type DepartmentPreviousValuesFields =
   | 'id'
+  | 'updatedAt'
+  | 'createdAt'
   | 'name'
+  | 'description'
 
 
 
@@ -2577,7 +2851,31 @@ export interface DepartmentPreviousValuesFieldDetails {
     nullable: false
     resolve: undefined
   }
+  updatedAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  createdAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
   name: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  description: {
     type: 'String'
     args: {}
     description: string
@@ -2663,14 +2961,20 @@ export interface CourseSubscriptionPayloadFieldDetails {
 type CoursePreviousValuesObject =
   | CoursePreviousValuesFields
   | { name: 'id', args?: [] | false, alias?: string  } 
+  | { name: 'updatedAt', args?: [] | false, alias?: string  } 
+  | { name: 'createdAt', args?: [] | false, alias?: string  } 
   | { name: 'name', args?: [] | false, alias?: string  } 
+  | { name: 'description', args?: [] | false, alias?: string  } 
   | { name: 'number', args?: [] | false, alias?: string  } 
   | { name: 'level', args?: [] | false, alias?: string  } 
   | { name: 'credits', args?: [] | false, alias?: string  } 
 
 type CoursePreviousValuesFields =
   | 'id'
+  | 'updatedAt'
+  | 'createdAt'
   | 'name'
+  | 'description'
   | 'number'
   | 'level'
   | 'credits'
@@ -2688,7 +2992,31 @@ export interface CoursePreviousValuesFieldDetails {
     nullable: false
     resolve: undefined
   }
+  updatedAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  createdAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
   name: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  description: {
     type: 'String'
     args: {}
     description: string
@@ -2746,6 +3074,22 @@ export interface CourseWhereInput {
   id_not_starts_with?: string | null
   id_ends_with?: string | null
   id_not_ends_with?: string | null
+  updatedAt?: string | null
+  updatedAt_not?: string | null
+  updatedAt_in?: string[]
+  updatedAt_not_in?: string[]
+  updatedAt_lt?: string | null
+  updatedAt_lte?: string | null
+  updatedAt_gt?: string | null
+  updatedAt_gte?: string | null
+  createdAt?: string | null
+  createdAt_not?: string | null
+  createdAt_in?: string[]
+  createdAt_not_in?: string[]
+  createdAt_lt?: string | null
+  createdAt_lte?: string | null
+  createdAt_gt?: string | null
+  createdAt_gte?: string | null
   name?: string | null
   name_not?: string | null
   name_in?: string[]
@@ -2760,6 +3104,20 @@ export interface CourseWhereInput {
   name_not_starts_with?: string | null
   name_ends_with?: string | null
   name_not_ends_with?: string | null
+  description?: string | null
+  description_not?: string | null
+  description_in?: string[]
+  description_not_in?: string[]
+  description_lt?: string | null
+  description_lte?: string | null
+  description_gt?: string | null
+  description_gte?: string | null
+  description_contains?: string | null
+  description_not_contains?: string | null
+  description_starts_with?: string | null
+  description_not_starts_with?: string | null
+  description_ends_with?: string | null
+  description_not_ends_with?: string | null
   number?: string | null
   number_not?: string | null
   number_in?: string[]
@@ -2814,6 +3172,22 @@ export type CourseWhereInputInputObject =
   | { name: 'id_not_starts_with', alias?: string  } 
   | { name: 'id_ends_with', alias?: string  } 
   | { name: 'id_not_ends_with', alias?: string  } 
+  | { name: 'updatedAt', alias?: string  } 
+  | { name: 'updatedAt_not', alias?: string  } 
+  | { name: 'updatedAt_in', alias?: string  } 
+  | { name: 'updatedAt_not_in', alias?: string  } 
+  | { name: 'updatedAt_lt', alias?: string  } 
+  | { name: 'updatedAt_lte', alias?: string  } 
+  | { name: 'updatedAt_gt', alias?: string  } 
+  | { name: 'updatedAt_gte', alias?: string  } 
+  | { name: 'createdAt', alias?: string  } 
+  | { name: 'createdAt_not', alias?: string  } 
+  | { name: 'createdAt_in', alias?: string  } 
+  | { name: 'createdAt_not_in', alias?: string  } 
+  | { name: 'createdAt_lt', alias?: string  } 
+  | { name: 'createdAt_lte', alias?: string  } 
+  | { name: 'createdAt_gt', alias?: string  } 
+  | { name: 'createdAt_gte', alias?: string  } 
   | { name: 'name', alias?: string  } 
   | { name: 'name_not', alias?: string  } 
   | { name: 'name_in', alias?: string  } 
@@ -2828,6 +3202,20 @@ export type CourseWhereInputInputObject =
   | { name: 'name_not_starts_with', alias?: string  } 
   | { name: 'name_ends_with', alias?: string  } 
   | { name: 'name_not_ends_with', alias?: string  } 
+  | { name: 'description', alias?: string  } 
+  | { name: 'description_not', alias?: string  } 
+  | { name: 'description_in', alias?: string  } 
+  | { name: 'description_not_in', alias?: string  } 
+  | { name: 'description_lt', alias?: string  } 
+  | { name: 'description_lte', alias?: string  } 
+  | { name: 'description_gt', alias?: string  } 
+  | { name: 'description_gte', alias?: string  } 
+  | { name: 'description_contains', alias?: string  } 
+  | { name: 'description_not_contains', alias?: string  } 
+  | { name: 'description_starts_with', alias?: string  } 
+  | { name: 'description_not_starts_with', alias?: string  } 
+  | { name: 'description_ends_with', alias?: string  } 
+  | { name: 'description_not_ends_with', alias?: string  } 
   | { name: 'number', alias?: string  } 
   | { name: 'number_not', alias?: string  } 
   | { name: 'number_in', alias?: string  } 
@@ -2881,6 +3269,22 @@ export interface SubjectWhereInput {
   id_not_starts_with?: string | null
   id_ends_with?: string | null
   id_not_ends_with?: string | null
+  updatedAt?: string | null
+  updatedAt_not?: string | null
+  updatedAt_in?: string[]
+  updatedAt_not_in?: string[]
+  updatedAt_lt?: string | null
+  updatedAt_lte?: string | null
+  updatedAt_gt?: string | null
+  updatedAt_gte?: string | null
+  createdAt?: string | null
+  createdAt_not?: string | null
+  createdAt_in?: string[]
+  createdAt_not_in?: string[]
+  createdAt_lt?: string | null
+  createdAt_lte?: string | null
+  createdAt_gt?: string | null
+  createdAt_gte?: string | null
   name?: string | null
   name_not?: string | null
   name_in?: string[]
@@ -2895,6 +3299,20 @@ export interface SubjectWhereInput {
   name_not_starts_with?: string | null
   name_ends_with?: string | null
   name_not_ends_with?: string | null
+  description?: string | null
+  description_not?: string | null
+  description_in?: string[]
+  description_not_in?: string[]
+  description_lt?: string | null
+  description_lte?: string | null
+  description_gt?: string | null
+  description_gte?: string | null
+  description_contains?: string | null
+  description_not_contains?: string | null
+  description_starts_with?: string | null
+  description_not_starts_with?: string | null
+  description_ends_with?: string | null
+  description_not_ends_with?: string | null
   AND?: SubjectWhereInput[]
   OR?: SubjectWhereInput[]
   NOT?: SubjectWhereInput[]
@@ -2915,6 +3333,22 @@ export type SubjectWhereInputInputObject =
   | { name: 'id_not_starts_with', alias?: string  } 
   | { name: 'id_ends_with', alias?: string  } 
   | { name: 'id_not_ends_with', alias?: string  } 
+  | { name: 'updatedAt', alias?: string  } 
+  | { name: 'updatedAt_not', alias?: string  } 
+  | { name: 'updatedAt_in', alias?: string  } 
+  | { name: 'updatedAt_not_in', alias?: string  } 
+  | { name: 'updatedAt_lt', alias?: string  } 
+  | { name: 'updatedAt_lte', alias?: string  } 
+  | { name: 'updatedAt_gt', alias?: string  } 
+  | { name: 'updatedAt_gte', alias?: string  } 
+  | { name: 'createdAt', alias?: string  } 
+  | { name: 'createdAt_not', alias?: string  } 
+  | { name: 'createdAt_in', alias?: string  } 
+  | { name: 'createdAt_not_in', alias?: string  } 
+  | { name: 'createdAt_lt', alias?: string  } 
+  | { name: 'createdAt_lte', alias?: string  } 
+  | { name: 'createdAt_gt', alias?: string  } 
+  | { name: 'createdAt_gte', alias?: string  } 
   | { name: 'name', alias?: string  } 
   | { name: 'name_not', alias?: string  } 
   | { name: 'name_in', alias?: string  } 
@@ -2929,6 +3363,20 @@ export type SubjectWhereInputInputObject =
   | { name: 'name_not_starts_with', alias?: string  } 
   | { name: 'name_ends_with', alias?: string  } 
   | { name: 'name_not_ends_with', alias?: string  } 
+  | { name: 'description', alias?: string  } 
+  | { name: 'description_not', alias?: string  } 
+  | { name: 'description_in', alias?: string  } 
+  | { name: 'description_not_in', alias?: string  } 
+  | { name: 'description_lt', alias?: string  } 
+  | { name: 'description_lte', alias?: string  } 
+  | { name: 'description_gt', alias?: string  } 
+  | { name: 'description_gte', alias?: string  } 
+  | { name: 'description_contains', alias?: string  } 
+  | { name: 'description_not_contains', alias?: string  } 
+  | { name: 'description_starts_with', alias?: string  } 
+  | { name: 'description_not_starts_with', alias?: string  } 
+  | { name: 'description_ends_with', alias?: string  } 
+  | { name: 'description_not_ends_with', alias?: string  } 
   | { name: 'AND', alias?: string  } 
   | { name: 'OR', alias?: string  } 
   | { name: 'NOT', alias?: string  } 
@@ -2948,6 +3396,22 @@ export interface DegreeWhereInput {
   id_not_starts_with?: string | null
   id_ends_with?: string | null
   id_not_ends_with?: string | null
+  updatedAt?: string | null
+  updatedAt_not?: string | null
+  updatedAt_in?: string[]
+  updatedAt_not_in?: string[]
+  updatedAt_lt?: string | null
+  updatedAt_lte?: string | null
+  updatedAt_gt?: string | null
+  updatedAt_gte?: string | null
+  createdAt?: string | null
+  createdAt_not?: string | null
+  createdAt_in?: string[]
+  createdAt_not_in?: string[]
+  createdAt_lt?: string | null
+  createdAt_lte?: string | null
+  createdAt_gt?: string | null
+  createdAt_gte?: string | null
   name?: string | null
   name_not?: string | null
   name_in?: string[]
@@ -2962,6 +3426,20 @@ export interface DegreeWhereInput {
   name_not_starts_with?: string | null
   name_ends_with?: string | null
   name_not_ends_with?: string | null
+  description?: string | null
+  description_not?: string | null
+  description_in?: string[]
+  description_not_in?: string[]
+  description_lt?: string | null
+  description_lte?: string | null
+  description_gt?: string | null
+  description_gte?: string | null
+  description_contains?: string | null
+  description_not_contains?: string | null
+  description_starts_with?: string | null
+  description_not_starts_with?: string | null
+  description_ends_with?: string | null
+  description_not_ends_with?: string | null
   requiredCredits?: number | null
   requiredCredits_not?: number | null
   requiredCredits_in?: number[]
@@ -2970,6 +3448,10 @@ export interface DegreeWhereInput {
   requiredCredits_lte?: number | null
   requiredCredits_gt?: number | null
   requiredCredits_gte?: number | null
+  requiredCourses_every?: CourseWhereInput | null
+  requiredCourses_some?: CourseWhereInput | null
+  requiredCourses_none?: CourseWhereInput | null
+  department?: DepartmentWhereInput | null
   AND?: DegreeWhereInput[]
   OR?: DegreeWhereInput[]
   NOT?: DegreeWhereInput[]
@@ -2990,6 +3472,22 @@ export type DegreeWhereInputInputObject =
   | { name: 'id_not_starts_with', alias?: string  } 
   | { name: 'id_ends_with', alias?: string  } 
   | { name: 'id_not_ends_with', alias?: string  } 
+  | { name: 'updatedAt', alias?: string  } 
+  | { name: 'updatedAt_not', alias?: string  } 
+  | { name: 'updatedAt_in', alias?: string  } 
+  | { name: 'updatedAt_not_in', alias?: string  } 
+  | { name: 'updatedAt_lt', alias?: string  } 
+  | { name: 'updatedAt_lte', alias?: string  } 
+  | { name: 'updatedAt_gt', alias?: string  } 
+  | { name: 'updatedAt_gte', alias?: string  } 
+  | { name: 'createdAt', alias?: string  } 
+  | { name: 'createdAt_not', alias?: string  } 
+  | { name: 'createdAt_in', alias?: string  } 
+  | { name: 'createdAt_not_in', alias?: string  } 
+  | { name: 'createdAt_lt', alias?: string  } 
+  | { name: 'createdAt_lte', alias?: string  } 
+  | { name: 'createdAt_gt', alias?: string  } 
+  | { name: 'createdAt_gte', alias?: string  } 
   | { name: 'name', alias?: string  } 
   | { name: 'name_not', alias?: string  } 
   | { name: 'name_in', alias?: string  } 
@@ -3004,6 +3502,20 @@ export type DegreeWhereInputInputObject =
   | { name: 'name_not_starts_with', alias?: string  } 
   | { name: 'name_ends_with', alias?: string  } 
   | { name: 'name_not_ends_with', alias?: string  } 
+  | { name: 'description', alias?: string  } 
+  | { name: 'description_not', alias?: string  } 
+  | { name: 'description_in', alias?: string  } 
+  | { name: 'description_not_in', alias?: string  } 
+  | { name: 'description_lt', alias?: string  } 
+  | { name: 'description_lte', alias?: string  } 
+  | { name: 'description_gt', alias?: string  } 
+  | { name: 'description_gte', alias?: string  } 
+  | { name: 'description_contains', alias?: string  } 
+  | { name: 'description_not_contains', alias?: string  } 
+  | { name: 'description_starts_with', alias?: string  } 
+  | { name: 'description_not_starts_with', alias?: string  } 
+  | { name: 'description_ends_with', alias?: string  } 
+  | { name: 'description_not_ends_with', alias?: string  } 
   | { name: 'requiredCredits', alias?: string  } 
   | { name: 'requiredCredits_not', alias?: string  } 
   | { name: 'requiredCredits_in', alias?: string  } 
@@ -3012,6 +3524,10 @@ export type DegreeWhereInputInputObject =
   | { name: 'requiredCredits_lte', alias?: string  } 
   | { name: 'requiredCredits_gt', alias?: string  } 
   | { name: 'requiredCredits_gte', alias?: string  } 
+  | { name: 'requiredCourses_every', alias?: string  } 
+  | { name: 'requiredCourses_some', alias?: string  } 
+  | { name: 'requiredCourses_none', alias?: string  } 
+  | { name: 'department', alias?: string  } 
   | { name: 'AND', alias?: string  } 
   | { name: 'OR', alias?: string  } 
   | { name: 'NOT', alias?: string  } 
@@ -3031,6 +3547,22 @@ export interface DepartmentWhereInput {
   id_not_starts_with?: string | null
   id_ends_with?: string | null
   id_not_ends_with?: string | null
+  updatedAt?: string | null
+  updatedAt_not?: string | null
+  updatedAt_in?: string[]
+  updatedAt_not_in?: string[]
+  updatedAt_lt?: string | null
+  updatedAt_lte?: string | null
+  updatedAt_gt?: string | null
+  updatedAt_gte?: string | null
+  createdAt?: string | null
+  createdAt_not?: string | null
+  createdAt_in?: string[]
+  createdAt_not_in?: string[]
+  createdAt_lt?: string | null
+  createdAt_lte?: string | null
+  createdAt_gt?: string | null
+  createdAt_gte?: string | null
   name?: string | null
   name_not?: string | null
   name_in?: string[]
@@ -3045,6 +3577,20 @@ export interface DepartmentWhereInput {
   name_not_starts_with?: string | null
   name_ends_with?: string | null
   name_not_ends_with?: string | null
+  description?: string | null
+  description_not?: string | null
+  description_in?: string[]
+  description_not_in?: string[]
+  description_lt?: string | null
+  description_lte?: string | null
+  description_gt?: string | null
+  description_gte?: string | null
+  description_contains?: string | null
+  description_not_contains?: string | null
+  description_starts_with?: string | null
+  description_not_starts_with?: string | null
+  description_ends_with?: string | null
+  description_not_ends_with?: string | null
   AND?: DepartmentWhereInput[]
   OR?: DepartmentWhereInput[]
   NOT?: DepartmentWhereInput[]
@@ -3065,6 +3611,22 @@ export type DepartmentWhereInputInputObject =
   | { name: 'id_not_starts_with', alias?: string  } 
   | { name: 'id_ends_with', alias?: string  } 
   | { name: 'id_not_ends_with', alias?: string  } 
+  | { name: 'updatedAt', alias?: string  } 
+  | { name: 'updatedAt_not', alias?: string  } 
+  | { name: 'updatedAt_in', alias?: string  } 
+  | { name: 'updatedAt_not_in', alias?: string  } 
+  | { name: 'updatedAt_lt', alias?: string  } 
+  | { name: 'updatedAt_lte', alias?: string  } 
+  | { name: 'updatedAt_gt', alias?: string  } 
+  | { name: 'updatedAt_gte', alias?: string  } 
+  | { name: 'createdAt', alias?: string  } 
+  | { name: 'createdAt_not', alias?: string  } 
+  | { name: 'createdAt_in', alias?: string  } 
+  | { name: 'createdAt_not_in', alias?: string  } 
+  | { name: 'createdAt_lt', alias?: string  } 
+  | { name: 'createdAt_lte', alias?: string  } 
+  | { name: 'createdAt_gt', alias?: string  } 
+  | { name: 'createdAt_gte', alias?: string  } 
   | { name: 'name', alias?: string  } 
   | { name: 'name_not', alias?: string  } 
   | { name: 'name_in', alias?: string  } 
@@ -3079,6 +3641,20 @@ export type DepartmentWhereInputInputObject =
   | { name: 'name_not_starts_with', alias?: string  } 
   | { name: 'name_ends_with', alias?: string  } 
   | { name: 'name_not_ends_with', alias?: string  } 
+  | { name: 'description', alias?: string  } 
+  | { name: 'description_not', alias?: string  } 
+  | { name: 'description_in', alias?: string  } 
+  | { name: 'description_not_in', alias?: string  } 
+  | { name: 'description_lt', alias?: string  } 
+  | { name: 'description_lte', alias?: string  } 
+  | { name: 'description_gt', alias?: string  } 
+  | { name: 'description_gte', alias?: string  } 
+  | { name: 'description_contains', alias?: string  } 
+  | { name: 'description_not_contains', alias?: string  } 
+  | { name: 'description_starts_with', alias?: string  } 
+  | { name: 'description_not_starts_with', alias?: string  } 
+  | { name: 'description_ends_with', alias?: string  } 
+  | { name: 'description_not_ends_with', alias?: string  } 
   | { name: 'AND', alias?: string  } 
   | { name: 'OR', alias?: string  } 
   | { name: 'NOT', alias?: string  } 
@@ -3098,6 +3674,22 @@ export interface StudentWhereInput {
   id_not_starts_with?: string | null
   id_ends_with?: string | null
   id_not_ends_with?: string | null
+  updatedAt?: string | null
+  updatedAt_not?: string | null
+  updatedAt_in?: string[]
+  updatedAt_not_in?: string[]
+  updatedAt_lt?: string | null
+  updatedAt_lte?: string | null
+  updatedAt_gt?: string | null
+  updatedAt_gte?: string | null
+  createdAt?: string | null
+  createdAt_not?: string | null
+  createdAt_in?: string[]
+  createdAt_not_in?: string[]
+  createdAt_lt?: string | null
+  createdAt_lte?: string | null
+  createdAt_gt?: string | null
+  createdAt_gte?: string | null
   name?: string | null
   name_not?: string | null
   name_in?: string[]
@@ -3136,6 +3728,22 @@ export type StudentWhereInputInputObject =
   | { name: 'id_not_starts_with', alias?: string  } 
   | { name: 'id_ends_with', alias?: string  } 
   | { name: 'id_not_ends_with', alias?: string  } 
+  | { name: 'updatedAt', alias?: string  } 
+  | { name: 'updatedAt_not', alias?: string  } 
+  | { name: 'updatedAt_in', alias?: string  } 
+  | { name: 'updatedAt_not_in', alias?: string  } 
+  | { name: 'updatedAt_lt', alias?: string  } 
+  | { name: 'updatedAt_lte', alias?: string  } 
+  | { name: 'updatedAt_gt', alias?: string  } 
+  | { name: 'updatedAt_gte', alias?: string  } 
+  | { name: 'createdAt', alias?: string  } 
+  | { name: 'createdAt_not', alias?: string  } 
+  | { name: 'createdAt_in', alias?: string  } 
+  | { name: 'createdAt_not_in', alias?: string  } 
+  | { name: 'createdAt_lt', alias?: string  } 
+  | { name: 'createdAt_lte', alias?: string  } 
+  | { name: 'createdAt_gt', alias?: string  } 
+  | { name: 'createdAt_gte', alias?: string  } 
   | { name: 'name', alias?: string  } 
   | { name: 'name_not', alias?: string  } 
   | { name: 'name_in', alias?: string  } 
@@ -3208,17 +3816,19 @@ export type CourseCreateManyInputInputObject =
   
 export interface CourseCreateInput {
   name?: string
+  description?: string
   number?: string
   level?: number
   credits?: number
   subject?: SubjectCreateOneInput | null
-  degree?: DegreeCreateOneInput | null
+  degree?: DegreeCreateOneWithoutRequiredCoursesInput | null
   department?: DepartmentCreateOneInput | null
   prerequisite?: CourseCreateOneInput | null
 }
 export type CourseCreateInputInputObject =
   | Extract<keyof CourseCreateInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   | { name: 'number', alias?: string  } 
   | { name: 'level', alias?: string  } 
   | { name: 'credits', alias?: string  } 
@@ -3238,28 +3848,34 @@ export type SubjectCreateOneInputInputObject =
   
 export interface SubjectCreateInput {
   name?: string
+  description?: string
 }
 export type SubjectCreateInputInputObject =
   | Extract<keyof SubjectCreateInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   
-export interface DegreeCreateOneInput {
-  create?: DegreeCreateInput | null
+export interface DegreeCreateOneWithoutRequiredCoursesInput {
+  create?: DegreeCreateWithoutRequiredCoursesInput | null
   connect?: DegreeWhereUniqueInput | null
 }
-export type DegreeCreateOneInputInputObject =
-  | Extract<keyof DegreeCreateOneInput, string>
+export type DegreeCreateOneWithoutRequiredCoursesInputInputObject =
+  | Extract<keyof DegreeCreateOneWithoutRequiredCoursesInput, string>
   | { name: 'create', alias?: string  } 
   | { name: 'connect', alias?: string  } 
   
-export interface DegreeCreateInput {
+export interface DegreeCreateWithoutRequiredCoursesInput {
   name?: string
+  description?: string
   requiredCredits?: number
+  department?: DepartmentCreateOneInput | null
 }
-export type DegreeCreateInputInputObject =
-  | Extract<keyof DegreeCreateInput, string>
+export type DegreeCreateWithoutRequiredCoursesInputInputObject =
+  | Extract<keyof DegreeCreateWithoutRequiredCoursesInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   | { name: 'requiredCredits', alias?: string  } 
+  | { name: 'department', alias?: string  } 
   
 export interface DepartmentCreateOneInput {
   create?: DepartmentCreateInput | null
@@ -3272,10 +3888,12 @@ export type DepartmentCreateOneInputInputObject =
   
 export interface DepartmentCreateInput {
   name?: string
+  description?: string
 }
 export type DepartmentCreateInputInputObject =
   | Extract<keyof DepartmentCreateInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   
 export interface CourseCreateOneInput {
   create?: CourseCreateInput | null
@@ -3285,6 +3903,60 @@ export type CourseCreateOneInputInputObject =
   | Extract<keyof CourseCreateOneInput, string>
   | { name: 'create', alias?: string  } 
   | { name: 'connect', alias?: string  } 
+  
+export interface DegreeCreateOneInput {
+  create?: DegreeCreateInput | null
+  connect?: DegreeWhereUniqueInput | null
+}
+export type DegreeCreateOneInputInputObject =
+  | Extract<keyof DegreeCreateOneInput, string>
+  | { name: 'create', alias?: string  } 
+  | { name: 'connect', alias?: string  } 
+  
+export interface DegreeCreateInput {
+  name?: string
+  description?: string
+  requiredCredits?: number
+  requiredCourses?: CourseCreateManyWithoutDegreeInput | null
+  department?: DepartmentCreateOneInput | null
+}
+export type DegreeCreateInputInputObject =
+  | Extract<keyof DegreeCreateInput, string>
+  | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
+  | { name: 'requiredCredits', alias?: string  } 
+  | { name: 'requiredCourses', alias?: string  } 
+  | { name: 'department', alias?: string  } 
+  
+export interface CourseCreateManyWithoutDegreeInput {
+  create?: CourseCreateWithoutDegreeInput[]
+  connect?: CourseWhereUniqueInput[]
+}
+export type CourseCreateManyWithoutDegreeInputInputObject =
+  | Extract<keyof CourseCreateManyWithoutDegreeInput, string>
+  | { name: 'create', alias?: string  } 
+  | { name: 'connect', alias?: string  } 
+  
+export interface CourseCreateWithoutDegreeInput {
+  name?: string
+  description?: string
+  number?: string
+  level?: number
+  credits?: number
+  subject?: SubjectCreateOneInput | null
+  department?: DepartmentCreateOneInput | null
+  prerequisite?: CourseCreateOneInput | null
+}
+export type CourseCreateWithoutDegreeInputInputObject =
+  | Extract<keyof CourseCreateWithoutDegreeInput, string>
+  | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
+  | { name: 'number', alias?: string  } 
+  | { name: 'level', alias?: string  } 
+  | { name: 'credits', alias?: string  } 
+  | { name: 'subject', alias?: string  } 
+  | { name: 'department', alias?: string  } 
+  | { name: 'prerequisite', alias?: string  } 
   
 export interface StudentUpdateInput {
   name?: string | null
@@ -3331,17 +4003,19 @@ export type CourseUpdateWithWhereUniqueNestedInputInputObject =
   
 export interface CourseUpdateDataInput {
   name?: string | null
+  description?: string | null
   number?: string | null
   level?: number | null
   credits?: number | null
   subject?: SubjectUpdateOneInput | null
-  degree?: DegreeUpdateOneInput | null
+  degree?: DegreeUpdateOneWithoutRequiredCoursesInput | null
   department?: DepartmentUpdateOneInput | null
   prerequisite?: CourseUpdateOneInput | null
 }
 export type CourseUpdateDataInputInputObject =
   | Extract<keyof CourseUpdateDataInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   | { name: 'number', alias?: string  } 
   | { name: 'level', alias?: string  } 
   | { name: 'credits', alias?: string  } 
@@ -3369,10 +4043,12 @@ export type SubjectUpdateOneInputInputObject =
   
 export interface SubjectUpdateDataInput {
   name?: string | null
+  description?: string | null
 }
 export type SubjectUpdateDataInputInputObject =
   | Extract<keyof SubjectUpdateDataInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   
 export interface SubjectUpsertNestedInput {
   update?: SubjectUpdateDataInput
@@ -3383,16 +4059,16 @@ export type SubjectUpsertNestedInputInputObject =
   | { name: 'update', alias?: string  } 
   | { name: 'create', alias?: string  } 
   
-export interface DegreeUpdateOneInput {
-  create?: DegreeCreateInput | null
-  update?: DegreeUpdateDataInput | null
-  upsert?: DegreeUpsertNestedInput | null
+export interface DegreeUpdateOneWithoutRequiredCoursesInput {
+  create?: DegreeCreateWithoutRequiredCoursesInput | null
+  update?: DegreeUpdateWithoutRequiredCoursesDataInput | null
+  upsert?: DegreeUpsertWithoutRequiredCoursesInput | null
   delete?: boolean | null
   disconnect?: boolean | null
   connect?: DegreeWhereUniqueInput | null
 }
-export type DegreeUpdateOneInputInputObject =
-  | Extract<keyof DegreeUpdateOneInput, string>
+export type DegreeUpdateOneWithoutRequiredCoursesInputInputObject =
+  | Extract<keyof DegreeUpdateOneWithoutRequiredCoursesInput, string>
   | { name: 'create', alias?: string  } 
   | { name: 'update', alias?: string  } 
   | { name: 'upsert', alias?: string  } 
@@ -3400,23 +4076,18 @@ export type DegreeUpdateOneInputInputObject =
   | { name: 'disconnect', alias?: string  } 
   | { name: 'connect', alias?: string  } 
   
-export interface DegreeUpdateDataInput {
+export interface DegreeUpdateWithoutRequiredCoursesDataInput {
   name?: string | null
+  description?: string | null
   requiredCredits?: number | null
+  department?: DepartmentUpdateOneInput | null
 }
-export type DegreeUpdateDataInputInputObject =
-  | Extract<keyof DegreeUpdateDataInput, string>
+export type DegreeUpdateWithoutRequiredCoursesDataInputInputObject =
+  | Extract<keyof DegreeUpdateWithoutRequiredCoursesDataInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   | { name: 'requiredCredits', alias?: string  } 
-  
-export interface DegreeUpsertNestedInput {
-  update?: DegreeUpdateDataInput
-  create?: DegreeCreateInput
-}
-export type DegreeUpsertNestedInputInputObject =
-  | Extract<keyof DegreeUpsertNestedInput, string>
-  | { name: 'update', alias?: string  } 
-  | { name: 'create', alias?: string  } 
+  | { name: 'department', alias?: string  } 
   
 export interface DepartmentUpdateOneInput {
   create?: DepartmentCreateInput | null
@@ -3437,10 +4108,12 @@ export type DepartmentUpdateOneInputInputObject =
   
 export interface DepartmentUpdateDataInput {
   name?: string | null
+  description?: string | null
 }
 export type DepartmentUpdateDataInputInputObject =
   | Extract<keyof DepartmentUpdateDataInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   
 export interface DepartmentUpsertNestedInput {
   update?: DepartmentUpdateDataInput
@@ -3448,6 +4121,15 @@ export interface DepartmentUpsertNestedInput {
 }
 export type DepartmentUpsertNestedInputInputObject =
   | Extract<keyof DepartmentUpsertNestedInput, string>
+  | { name: 'update', alias?: string  } 
+  | { name: 'create', alias?: string  } 
+  
+export interface DegreeUpsertWithoutRequiredCoursesInput {
+  update?: DegreeUpdateWithoutRequiredCoursesDataInput
+  create?: DegreeCreateWithoutRequiredCoursesInput
+}
+export type DegreeUpsertWithoutRequiredCoursesInputInputObject =
+  | Extract<keyof DegreeUpsertWithoutRequiredCoursesInput, string>
   | { name: 'update', alias?: string  } 
   | { name: 'create', alias?: string  } 
   
@@ -3503,6 +4185,22 @@ export interface CourseScalarWhereInput {
   id_not_starts_with?: string | null
   id_ends_with?: string | null
   id_not_ends_with?: string | null
+  updatedAt?: string | null
+  updatedAt_not?: string | null
+  updatedAt_in?: string[]
+  updatedAt_not_in?: string[]
+  updatedAt_lt?: string | null
+  updatedAt_lte?: string | null
+  updatedAt_gt?: string | null
+  updatedAt_gte?: string | null
+  createdAt?: string | null
+  createdAt_not?: string | null
+  createdAt_in?: string[]
+  createdAt_not_in?: string[]
+  createdAt_lt?: string | null
+  createdAt_lte?: string | null
+  createdAt_gt?: string | null
+  createdAt_gte?: string | null
   name?: string | null
   name_not?: string | null
   name_in?: string[]
@@ -3517,6 +4215,20 @@ export interface CourseScalarWhereInput {
   name_not_starts_with?: string | null
   name_ends_with?: string | null
   name_not_ends_with?: string | null
+  description?: string | null
+  description_not?: string | null
+  description_in?: string[]
+  description_not_in?: string[]
+  description_lt?: string | null
+  description_lte?: string | null
+  description_gt?: string | null
+  description_gte?: string | null
+  description_contains?: string | null
+  description_not_contains?: string | null
+  description_starts_with?: string | null
+  description_not_starts_with?: string | null
+  description_ends_with?: string | null
+  description_not_ends_with?: string | null
   number?: string | null
   number_not?: string | null
   number_in?: string[]
@@ -3567,6 +4279,22 @@ export type CourseScalarWhereInputInputObject =
   | { name: 'id_not_starts_with', alias?: string  } 
   | { name: 'id_ends_with', alias?: string  } 
   | { name: 'id_not_ends_with', alias?: string  } 
+  | { name: 'updatedAt', alias?: string  } 
+  | { name: 'updatedAt_not', alias?: string  } 
+  | { name: 'updatedAt_in', alias?: string  } 
+  | { name: 'updatedAt_not_in', alias?: string  } 
+  | { name: 'updatedAt_lt', alias?: string  } 
+  | { name: 'updatedAt_lte', alias?: string  } 
+  | { name: 'updatedAt_gt', alias?: string  } 
+  | { name: 'updatedAt_gte', alias?: string  } 
+  | { name: 'createdAt', alias?: string  } 
+  | { name: 'createdAt_not', alias?: string  } 
+  | { name: 'createdAt_in', alias?: string  } 
+  | { name: 'createdAt_not_in', alias?: string  } 
+  | { name: 'createdAt_lt', alias?: string  } 
+  | { name: 'createdAt_lte', alias?: string  } 
+  | { name: 'createdAt_gt', alias?: string  } 
+  | { name: 'createdAt_gte', alias?: string  } 
   | { name: 'name', alias?: string  } 
   | { name: 'name_not', alias?: string  } 
   | { name: 'name_in', alias?: string  } 
@@ -3581,6 +4309,20 @@ export type CourseScalarWhereInputInputObject =
   | { name: 'name_not_starts_with', alias?: string  } 
   | { name: 'name_ends_with', alias?: string  } 
   | { name: 'name_not_ends_with', alias?: string  } 
+  | { name: 'description', alias?: string  } 
+  | { name: 'description_not', alias?: string  } 
+  | { name: 'description_in', alias?: string  } 
+  | { name: 'description_not_in', alias?: string  } 
+  | { name: 'description_lt', alias?: string  } 
+  | { name: 'description_lte', alias?: string  } 
+  | { name: 'description_gt', alias?: string  } 
+  | { name: 'description_gte', alias?: string  } 
+  | { name: 'description_contains', alias?: string  } 
+  | { name: 'description_not_contains', alias?: string  } 
+  | { name: 'description_starts_with', alias?: string  } 
+  | { name: 'description_not_starts_with', alias?: string  } 
+  | { name: 'description_ends_with', alias?: string  } 
+  | { name: 'description_not_ends_with', alias?: string  } 
   | { name: 'number', alias?: string  } 
   | { name: 'number_not', alias?: string  } 
   | { name: 'number_in', alias?: string  } 
@@ -3626,6 +4368,7 @@ export type CourseUpdateManyWithWhereNestedInputInputObject =
   
 export interface CourseUpdateManyDataInput {
   name?: string | null
+  description?: string | null
   number?: string | null
   level?: number | null
   credits?: number | null
@@ -3633,9 +4376,115 @@ export interface CourseUpdateManyDataInput {
 export type CourseUpdateManyDataInputInputObject =
   | Extract<keyof CourseUpdateManyDataInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   | { name: 'number', alias?: string  } 
   | { name: 'level', alias?: string  } 
   | { name: 'credits', alias?: string  } 
+  
+export interface DegreeUpdateOneInput {
+  create?: DegreeCreateInput | null
+  update?: DegreeUpdateDataInput | null
+  upsert?: DegreeUpsertNestedInput | null
+  delete?: boolean | null
+  disconnect?: boolean | null
+  connect?: DegreeWhereUniqueInput | null
+}
+export type DegreeUpdateOneInputInputObject =
+  | Extract<keyof DegreeUpdateOneInput, string>
+  | { name: 'create', alias?: string  } 
+  | { name: 'update', alias?: string  } 
+  | { name: 'upsert', alias?: string  } 
+  | { name: 'delete', alias?: string  } 
+  | { name: 'disconnect', alias?: string  } 
+  | { name: 'connect', alias?: string  } 
+  
+export interface DegreeUpdateDataInput {
+  name?: string | null
+  description?: string | null
+  requiredCredits?: number | null
+  requiredCourses?: CourseUpdateManyWithoutDegreeInput | null
+  department?: DepartmentUpdateOneInput | null
+}
+export type DegreeUpdateDataInputInputObject =
+  | Extract<keyof DegreeUpdateDataInput, string>
+  | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
+  | { name: 'requiredCredits', alias?: string  } 
+  | { name: 'requiredCourses', alias?: string  } 
+  | { name: 'department', alias?: string  } 
+  
+export interface CourseUpdateManyWithoutDegreeInput {
+  create?: CourseCreateWithoutDegreeInput[]
+  delete?: CourseWhereUniqueInput[]
+  connect?: CourseWhereUniqueInput[]
+  set?: CourseWhereUniqueInput[]
+  disconnect?: CourseWhereUniqueInput[]
+  update?: CourseUpdateWithWhereUniqueWithoutDegreeInput[]
+  upsert?: CourseUpsertWithWhereUniqueWithoutDegreeInput[]
+  deleteMany?: CourseScalarWhereInput[]
+  updateMany?: CourseUpdateManyWithWhereNestedInput[]
+}
+export type CourseUpdateManyWithoutDegreeInputInputObject =
+  | Extract<keyof CourseUpdateManyWithoutDegreeInput, string>
+  | { name: 'create', alias?: string  } 
+  | { name: 'delete', alias?: string  } 
+  | { name: 'connect', alias?: string  } 
+  | { name: 'set', alias?: string  } 
+  | { name: 'disconnect', alias?: string  } 
+  | { name: 'update', alias?: string  } 
+  | { name: 'upsert', alias?: string  } 
+  | { name: 'deleteMany', alias?: string  } 
+  | { name: 'updateMany', alias?: string  } 
+  
+export interface CourseUpdateWithWhereUniqueWithoutDegreeInput {
+  where?: CourseWhereUniqueInput
+  data?: CourseUpdateWithoutDegreeDataInput
+}
+export type CourseUpdateWithWhereUniqueWithoutDegreeInputInputObject =
+  | Extract<keyof CourseUpdateWithWhereUniqueWithoutDegreeInput, string>
+  | { name: 'where', alias?: string  } 
+  | { name: 'data', alias?: string  } 
+  
+export interface CourseUpdateWithoutDegreeDataInput {
+  name?: string | null
+  description?: string | null
+  number?: string | null
+  level?: number | null
+  credits?: number | null
+  subject?: SubjectUpdateOneInput | null
+  department?: DepartmentUpdateOneInput | null
+  prerequisite?: CourseUpdateOneInput | null
+}
+export type CourseUpdateWithoutDegreeDataInputInputObject =
+  | Extract<keyof CourseUpdateWithoutDegreeDataInput, string>
+  | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
+  | { name: 'number', alias?: string  } 
+  | { name: 'level', alias?: string  } 
+  | { name: 'credits', alias?: string  } 
+  | { name: 'subject', alias?: string  } 
+  | { name: 'department', alias?: string  } 
+  | { name: 'prerequisite', alias?: string  } 
+  
+export interface CourseUpsertWithWhereUniqueWithoutDegreeInput {
+  where?: CourseWhereUniqueInput
+  update?: CourseUpdateWithoutDegreeDataInput
+  create?: CourseCreateWithoutDegreeInput
+}
+export type CourseUpsertWithWhereUniqueWithoutDegreeInputInputObject =
+  | Extract<keyof CourseUpsertWithWhereUniqueWithoutDegreeInput, string>
+  | { name: 'where', alias?: string  } 
+  | { name: 'update', alias?: string  } 
+  | { name: 'create', alias?: string  } 
+  
+export interface DegreeUpsertNestedInput {
+  update?: DegreeUpdateDataInput
+  create?: DegreeCreateInput
+}
+export type DegreeUpsertNestedInputInputObject =
+  | Extract<keyof DegreeUpsertNestedInput, string>
+  | { name: 'update', alias?: string  } 
+  | { name: 'create', alias?: string  } 
   
 export interface StudentUpdateManyMutationInput {
   name?: string | null
@@ -3646,63 +4495,81 @@ export type StudentUpdateManyMutationInputInputObject =
   
 export interface SubjectUpdateInput {
   name?: string | null
+  description?: string | null
 }
 export type SubjectUpdateInputInputObject =
   | Extract<keyof SubjectUpdateInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   
 export interface SubjectUpdateManyMutationInput {
   name?: string | null
+  description?: string | null
 }
 export type SubjectUpdateManyMutationInputInputObject =
   | Extract<keyof SubjectUpdateManyMutationInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   
 export interface DegreeUpdateInput {
   name?: string | null
+  description?: string | null
   requiredCredits?: number | null
+  requiredCourses?: CourseUpdateManyWithoutDegreeInput | null
+  department?: DepartmentUpdateOneInput | null
 }
 export type DegreeUpdateInputInputObject =
   | Extract<keyof DegreeUpdateInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   | { name: 'requiredCredits', alias?: string  } 
+  | { name: 'requiredCourses', alias?: string  } 
+  | { name: 'department', alias?: string  } 
   
 export interface DegreeUpdateManyMutationInput {
   name?: string | null
+  description?: string | null
   requiredCredits?: number | null
 }
 export type DegreeUpdateManyMutationInputInputObject =
   | Extract<keyof DegreeUpdateManyMutationInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   | { name: 'requiredCredits', alias?: string  } 
   
 export interface DepartmentUpdateInput {
   name?: string | null
+  description?: string | null
 }
 export type DepartmentUpdateInputInputObject =
   | Extract<keyof DepartmentUpdateInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   
 export interface DepartmentUpdateManyMutationInput {
   name?: string | null
+  description?: string | null
 }
 export type DepartmentUpdateManyMutationInputInputObject =
   | Extract<keyof DepartmentUpdateManyMutationInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   
 export interface CourseUpdateInput {
   name?: string | null
+  description?: string | null
   number?: string | null
   level?: number | null
   credits?: number | null
   subject?: SubjectUpdateOneInput | null
-  degree?: DegreeUpdateOneInput | null
+  degree?: DegreeUpdateOneWithoutRequiredCoursesInput | null
   department?: DepartmentUpdateOneInput | null
   prerequisite?: CourseUpdateOneInput | null
 }
 export type CourseUpdateInputInputObject =
   | Extract<keyof CourseUpdateInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   | { name: 'number', alias?: string  } 
   | { name: 'level', alias?: string  } 
   | { name: 'credits', alias?: string  } 
@@ -3713,6 +4580,7 @@ export type CourseUpdateInputInputObject =
   
 export interface CourseUpdateManyMutationInput {
   name?: string | null
+  description?: string | null
   number?: string | null
   level?: number | null
   credits?: number | null
@@ -3720,6 +4588,7 @@ export interface CourseUpdateManyMutationInput {
 export type CourseUpdateManyMutationInputInputObject =
   | Extract<keyof CourseUpdateManyMutationInput, string>
   | { name: 'name', alias?: string  } 
+  | { name: 'description', alias?: string  } 
   | { name: 'number', alias?: string  } 
   | { name: 'level', alias?: string  } 
   | { name: 'credits', alias?: string  } 
@@ -3833,60 +4702,68 @@ export type CourseSubscriptionWhereInputInputObject =
 export type CourseOrderByInputValues =
   | 'id_ASC'
   | 'id_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
   | 'name_ASC'
   | 'name_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
   | 'number_ASC'
   | 'number_DESC'
   | 'level_ASC'
   | 'level_DESC'
   | 'credits_ASC'
   | 'credits_DESC'
-  | 'createdAt_ASC'
-  | 'createdAt_DESC'
-  | 'updatedAt_ASC'
-  | 'updatedAt_DESC'
   
 export type StudentOrderByInputValues =
   | 'id_ASC'
   | 'id_DESC'
-  | 'name_ASC'
-  | 'name_DESC'
-  | 'createdAt_ASC'
-  | 'createdAt_DESC'
   | 'updatedAt_ASC'
   | 'updatedAt_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
   
 export type SubjectOrderByInputValues =
   | 'id_ASC'
   | 'id_DESC'
-  | 'name_ASC'
-  | 'name_DESC'
-  | 'createdAt_ASC'
-  | 'createdAt_DESC'
   | 'updatedAt_ASC'
   | 'updatedAt_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
   
 export type DegreeOrderByInputValues =
   | 'id_ASC'
   | 'id_DESC'
-  | 'name_ASC'
-  | 'name_DESC'
-  | 'requiredCredits_ASC'
-  | 'requiredCredits_DESC'
-  | 'createdAt_ASC'
-  | 'createdAt_DESC'
   | 'updatedAt_ASC'
   | 'updatedAt_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
+  | 'requiredCredits_ASC'
+  | 'requiredCredits_DESC'
   
 export type DepartmentOrderByInputValues =
   | 'id_ASC'
   | 'id_DESC'
-  | 'name_ASC'
-  | 'name_DESC'
-  | 'createdAt_ASC'
-  | 'createdAt_DESC'
   | 'updatedAt_ASC'
   | 'updatedAt_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'description_ASC'
+  | 'description_DESC'
   
 export type MutationTypeValues =
   | 'CREATED'

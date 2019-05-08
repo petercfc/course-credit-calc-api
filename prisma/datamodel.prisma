@@ -1,18 +1,24 @@
 type Student {
-  id: ID! @unique
+  id: ID! @id
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
   name: String
   coursesPassed: [Course]
   enrolledDegree:Degree
 }
 
 type Subject {
-  id: ID! @unique
+  id: ID! @id
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
   name: String!
   description: String!
 }
 
 type Degree {
-  id: ID! @unique
+  id: ID! @id
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
   name: String!
   description: String!
   requiredCredits: Int!
@@ -21,13 +27,17 @@ type Degree {
 }
 
 type Department {
-  id: ID! @unique
+  id: ID! @id
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
   name: String!
   description: String!
 }
 
 type Course {
-  id: ID! @unique
+  id: ID! @id
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
   name: String!
   description: String!
   number:String!
