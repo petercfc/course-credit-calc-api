@@ -31,7 +31,7 @@ type Course {
   updatedAt: DateTime!
   createdAt: DateTime!
   name: String!
-  description: String!
+  description: String
   number: String!
   level: Int!
   credits: Int!
@@ -50,7 +50,7 @@ type CourseConnection {
 input CourseCreateInput {
   id: ID
   name: String!
-  description: String!
+  description: String
   number: String!
   level: Int!
   credits: Int!
@@ -78,7 +78,7 @@ input CourseCreateOneInput {
 input CourseCreateWithoutDegreeInput {
   id: ID
   name: String!
-  description: String!
+  description: String
   number: String!
   level: Int!
   credits: Int!
@@ -116,7 +116,7 @@ type CoursePreviousValues {
   updatedAt: DateTime!
   createdAt: DateTime!
   name: String!
-  description: String!
+  description: String
   number: String!
   level: Int!
   credits: Int!
@@ -459,7 +459,7 @@ type Degree {
   updatedAt: DateTime!
   createdAt: DateTime!
   name: String!
-  description: String!
+  description: String
   requiredCredits: Int!
   requiredCourses(where: CourseWhereInput, orderBy: CourseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Course!]
   department: Department
@@ -474,7 +474,7 @@ type DegreeConnection {
 input DegreeCreateInput {
   id: ID
   name: String!
-  description: String!
+  description: String
   requiredCredits: Int!
   requiredCourses: CourseCreateManyWithoutDegreeInput
   department: DepartmentCreateOneInput
@@ -493,7 +493,7 @@ input DegreeCreateOneWithoutRequiredCoursesInput {
 input DegreeCreateWithoutRequiredCoursesInput {
   id: ID
   name: String!
-  description: String!
+  description: String
   requiredCredits: Int!
   department: DepartmentCreateOneInput
 }
@@ -523,7 +523,7 @@ type DegreePreviousValues {
   updatedAt: DateTime!
   createdAt: DateTime!
   name: String!
-  description: String!
+  description: String
   requiredCredits: Int!
 }
 
@@ -687,7 +687,7 @@ type Department {
   updatedAt: DateTime!
   createdAt: DateTime!
   name: String!
-  description: String!
+  description: String
 }
 
 type DepartmentConnection {
@@ -699,7 +699,7 @@ type DepartmentConnection {
 input DepartmentCreateInput {
   id: ID
   name: String!
-  description: String!
+  description: String
 }
 
 input DepartmentCreateOneInput {
@@ -730,7 +730,7 @@ type DepartmentPreviousValues {
   updatedAt: DateTime!
   createdAt: DateTime!
   name: String!
-  description: String!
+  description: String
 }
 
 type DepartmentSubscriptionPayload {
@@ -1055,7 +1055,7 @@ type Subject {
   updatedAt: DateTime!
   createdAt: DateTime!
   name: String!
-  description: String!
+  description: String
 }
 
 type SubjectConnection {
@@ -1067,7 +1067,7 @@ type SubjectConnection {
 input SubjectCreateInput {
   id: ID
   name: String!
-  description: String!
+  description: String
 }
 
 input SubjectCreateOneInput {
@@ -1098,7 +1098,7 @@ type SubjectPreviousValues {
   updatedAt: DateTime!
   createdAt: DateTime!
   name: String!
-  description: String!
+  description: String
 }
 
 type SubjectSubscriptionPayload {

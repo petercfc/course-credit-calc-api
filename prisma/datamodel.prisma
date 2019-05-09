@@ -12,7 +12,7 @@ type Subject {
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
   name: String!
-  description: String!
+  description: String
 }
 
 type Degree {
@@ -20,7 +20,7 @@ type Degree {
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
   name: String!
-  description: String!
+  description: String
   requiredCredits: Int!
   requiredCourses: [Course]
   department: Department
@@ -31,7 +31,7 @@ type Department {
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
   name: String!
-  description: String!
+  description: String
 }
 
 type Course {
@@ -39,7 +39,7 @@ type Course {
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
   name: String!
-  description: String!
+  description: String
   number:String!
   level: Int!
   credits: Int!

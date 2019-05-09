@@ -674,7 +674,7 @@ export interface CourseFieldDetails {
     args: {}
     description: string
     list: undefined
-    nullable: false
+    nullable: true
     resolve: undefined
   }
   number: {
@@ -815,7 +815,7 @@ export interface SubjectFieldDetails {
     args: {}
     description: string
     list: undefined
-    nullable: false
+    nullable: true
     resolve: undefined
   }
 }
@@ -893,7 +893,7 @@ export interface DegreeFieldDetails {
     args: {}
     description: string
     list: undefined
-    nullable: false
+    nullable: true
     resolve: undefined
   }
   requiredCredits: {
@@ -992,7 +992,7 @@ export interface DepartmentFieldDetails {
     args: {}
     description: string
     list: undefined
-    nullable: false
+    nullable: true
     resolve: undefined
   }
 }
@@ -2600,7 +2600,7 @@ export interface SubjectPreviousValuesFieldDetails {
     args: {}
     description: string
     list: undefined
-    nullable: false
+    nullable: true
     resolve: undefined
   }
 }
@@ -2737,7 +2737,7 @@ export interface DegreePreviousValuesFieldDetails {
     args: {}
     description: string
     list: undefined
-    nullable: false
+    nullable: true
     resolve: undefined
   }
   requiredCredits: {
@@ -2880,7 +2880,7 @@ export interface DepartmentPreviousValuesFieldDetails {
     args: {}
     description: string
     list: undefined
-    nullable: false
+    nullable: true
     resolve: undefined
   }
 }
@@ -3021,7 +3021,7 @@ export interface CoursePreviousValuesFieldDetails {
     args: {}
     description: string
     list: undefined
-    nullable: false
+    nullable: true
     resolve: undefined
   }
   number: {
@@ -3816,7 +3816,7 @@ export type CourseCreateManyInputInputObject =
   
 export interface CourseCreateInput {
   name?: string
-  description?: string
+  description?: string | null
   number?: string
   level?: number
   credits?: number
@@ -3848,7 +3848,7 @@ export type SubjectCreateOneInputInputObject =
   
 export interface SubjectCreateInput {
   name?: string
-  description?: string
+  description?: string | null
 }
 export type SubjectCreateInputInputObject =
   | Extract<keyof SubjectCreateInput, string>
@@ -3866,7 +3866,7 @@ export type DegreeCreateOneWithoutRequiredCoursesInputInputObject =
   
 export interface DegreeCreateWithoutRequiredCoursesInput {
   name?: string
-  description?: string
+  description?: string | null
   requiredCredits?: number
   department?: DepartmentCreateOneInput | null
 }
@@ -3888,7 +3888,7 @@ export type DepartmentCreateOneInputInputObject =
   
 export interface DepartmentCreateInput {
   name?: string
-  description?: string
+  description?: string | null
 }
 export type DepartmentCreateInputInputObject =
   | Extract<keyof DepartmentCreateInput, string>
@@ -3915,7 +3915,7 @@ export type DegreeCreateOneInputInputObject =
   
 export interface DegreeCreateInput {
   name?: string
-  description?: string
+  description?: string | null
   requiredCredits?: number
   requiredCourses?: CourseCreateManyWithoutDegreeInput | null
   department?: DepartmentCreateOneInput | null
@@ -3939,7 +3939,7 @@ export type CourseCreateManyWithoutDegreeInputInputObject =
   
 export interface CourseCreateWithoutDegreeInput {
   name?: string
-  description?: string
+  description?: string | null
   number?: string
   level?: number
   credits?: number

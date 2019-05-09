@@ -525,7 +525,7 @@ export interface DegreeWhereInput {
 export interface CourseCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
-  description: String;
+  description?: Maybe<String>;
   number: String;
   level: Int;
   credits: Int;
@@ -557,7 +557,7 @@ export interface CourseUpdateOneInput {
 export interface SubjectCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
-  description: String;
+  description?: Maybe<String>;
 }
 
 export interface StudentSubscriptionWhereInput {
@@ -590,7 +590,7 @@ export interface DegreeSubscriptionWhereInput {
 export interface DegreeCreateWithoutRequiredCoursesInput {
   id?: Maybe<ID_Input>;
   name: String;
-  description: String;
+  description?: Maybe<String>;
   requiredCredits: Int;
   department?: Maybe<DepartmentCreateOneInput>;
 }
@@ -612,7 +612,7 @@ export interface SubjectUpdateInput {
 export interface DepartmentCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
-  description: String;
+  description?: Maybe<String>;
 }
 
 export interface DegreeUpsertNestedInput {
@@ -1113,7 +1113,7 @@ export interface DegreeUpdateOneInput {
 export interface DegreeCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
-  description: String;
+  description?: Maybe<String>;
   requiredCredits: Int;
   requiredCourses?: Maybe<CourseCreateManyWithoutDegreeInput>;
   department?: Maybe<DepartmentCreateOneInput>;
@@ -1158,7 +1158,7 @@ export interface DegreeUpdateInput {
 export interface CourseCreateWithoutDegreeInput {
   id?: Maybe<ID_Input>;
   name: String;
-  description: String;
+  description?: Maybe<String>;
   number: String;
   level: Int;
   credits: Int;
@@ -1224,7 +1224,7 @@ export interface SubjectPreviousValues {
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
   name: String;
-  description: String;
+  description?: String;
 }
 
 export interface SubjectPreviousValuesPromise
@@ -1269,7 +1269,7 @@ export interface Degree {
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
   name: String;
-  description: String;
+  description?: String;
   requiredCredits: Int;
 }
 
@@ -1360,7 +1360,7 @@ export interface Department {
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
   name: String;
-  description: String;
+  description?: String;
 }
 
 export interface DepartmentPromise extends Promise<Department>, Fragmentable {
@@ -1396,7 +1396,7 @@ export interface Subject {
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
   name: String;
-  description: String;
+  description?: String;
 }
 
 export interface SubjectPromise extends Promise<Subject>, Fragmentable {
@@ -1485,7 +1485,7 @@ export interface Course {
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
   name: String;
-  description: String;
+  description?: String;
   number: String;
   level: Int;
   credits: Int;
@@ -1607,7 +1607,7 @@ export interface CoursePreviousValues {
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
   name: String;
-  description: String;
+  description?: String;
   number: String;
   level: Int;
   credits: Int;
@@ -1889,7 +1889,7 @@ export interface DepartmentPreviousValues {
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
   name: String;
-  description: String;
+  description?: String;
 }
 
 export interface DepartmentPreviousValuesPromise
@@ -1967,7 +1967,7 @@ export interface DegreePreviousValues {
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
   name: String;
-  description: String;
+  description?: String;
   requiredCredits: Int;
 }
 
